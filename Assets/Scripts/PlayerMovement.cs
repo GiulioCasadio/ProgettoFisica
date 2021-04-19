@@ -7,16 +7,17 @@ public class PlayerMovement : MonoBehaviour
 {
     public Transform playerBody;
     public CharacterController controller;
-    //public GameObject menu;
+    public GameObject gameOver, hud;
     public float speed = 12f;
 
     //private static bool gameIsPaused;
 
     private void Start()
     {
-        //gameIsPaused = false;
+        hud.SetActive(true);
+        gameOver.SetActive(false);
         Time.timeScale = 1;
-        //menu.SetActive(false);
+        gameOver.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -30,61 +31,28 @@ public class PlayerMovement : MonoBehaviour
 
         controller.Move(move * speed * Time.deltaTime);
 
-       /* if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (gameIsPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                PauseGame();
-            }
-        }*/
     }
 
-   /* public void Resume()
+    public void GameOver()
     {
-        menu.SetActive(false);
-        Time.timeScale = 1;
-        gameIsPaused = false;
-    }
-
-    void PauseGame()
-    {
+        gameOver.SetActive(true);
+        hud.SetActive(false);
         Cursor.lockState = CursorLockMode.Confined;
-        menu.SetActive(true);
         Time.timeScale = 0;
-        gameIsPaused = true;
     }
 
     public void StartScene()
     {
-        SceneManager.LoadScene("Scenes/SampleScene");
+        SceneManager.LoadScene("Scenes/Start");
     }
 
-    public void Demo1()
+    public void RetartScene()
     {
-        SceneManager.LoadScene("Scenes/FruitNinjaLike");
+        SceneManager.LoadScene("Scenes/MainScene");
     }
 
-    public void Demo2()
-    {
-        SceneManager.LoadScene("Scenes/ShooterLike");
-    }
-
-    public void Demo3()
-    {
-        SceneManager.LoadScene("Scenes/WallDestroyable");
-    }
-
-    public void Demo4()
-    {
-        SceneManager.LoadScene("Scenes/WallUndestroyable");
-    }
-
-    public void QuitDemo()
+    public void QuitGame()
     {
         Application.Quit();
-    }*/
+    }
 }
