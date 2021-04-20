@@ -6,13 +6,13 @@ public class MeshSplitter : MonoBehaviour
 {
     private TetMesh tm;
     public float dim;
+    public int color;
 
     protected List<bool> thisVisiblePolys = new List<bool>();
     protected List<Vector3> thisVertices =  new List<Vector3>();
     protected Dictionary<int, int> thisOldNewVertices = new Dictionary<int, int>();
 
     private GameObject planeCut;
-    //private float invulnerability = 0.1f;
 
     void Start()
     {
@@ -23,15 +23,27 @@ public class MeshSplitter : MonoBehaviour
         this.transform.gameObject.AddComponent<MeshCollider>().convex = true;
     }
 
-    //void Update()
-    //{
-    //    invulnerability -= Time.deltaTime;
-    //}
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "Bullet(Clone)" )
         {
+            // Aggiorno il punteggio
+            if (transform.parent.parent != null)
+            {
+                switch (this.transform.parent.gameObject.GetComponent<TetMesh>().material.name) {
+                    case "TransparentRed":
+                        color = 1;
+                        break;
+                    case "TransparentBlue":
+                        color = 2;
+                        break;
+                    case "TransparentGreen":
+                        color = 3;
+                        break;
+                }
+                GameObject.Find("Player").GetComponent<PlayerMovement>().AddPoint(color);
+            }
+
             transform.parent.parent = null;
             transform.parent.GetComponent<TetMesh>().UpdateStatus();
             planeCut = GameObject.Find("PlaneCutter");
