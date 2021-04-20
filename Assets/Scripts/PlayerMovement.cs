@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,6 +10,11 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController controller;
     public GameObject gameOver, hud;
     public float speed = 12f;
+    public TextMeshProUGUI timer;
+    public TextMeshProUGUI punteggio;
+    public TextMeshProUGUI comboCounter;
+    public GameObject comboImage;
+    private float timeRemaining;
 
     //private static bool gameIsPaused;
 
@@ -17,8 +23,9 @@ public class PlayerMovement : MonoBehaviour
         hud.SetActive(true);
         gameOver.SetActive(false);
         Time.timeScale = 1;
-        gameOver.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
+        timeRemaining = 90;
+        UpdateTime(timeRemaining);
     }
 
     // Update is called once per frame
@@ -31,6 +38,17 @@ public class PlayerMovement : MonoBehaviour
 
         controller.Move(move * speed * Time.deltaTime);
 
+        if (timeRemaining > 0)
+        {
+            timeRemaining -= Time.deltaTime;
+            UpdateTime(timeRemaining);
+        }
+        else
+        {
+            hud.SetActive(false);
+            gameOver.SetActive(true);
+            Time.timeScale = 0;
+        }
     }
 
     public void GameOver()
@@ -54,5 +72,14 @@ public class PlayerMovement : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void UpdateTime(float currentTime)
+    {
+        float minutes, seconds;
+        minutes = Mathf.FloorToInt(timeRemaining / 60);
+        seconds = Mathf.FloorToInt(timeRemaining % 60);
+
+        timer.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 }
