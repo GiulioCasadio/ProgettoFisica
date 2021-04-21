@@ -12,6 +12,7 @@ public class TetMesh : AbstractMesh
 
     private int isFell;
     private bool isBreaking = false;
+    private bool isBreakable = false;
 
     private void Init()
     {
@@ -193,4 +194,8 @@ public class TetMesh : AbstractMesh
     public bool GetBreak() { return isBreaking; }
 
     public void SetBreak(bool c) { isBreaking = c; }
+
+    public bool GetCantBreak() { return isBreakable; }
+
+    public void SetCantBreak(bool c) { isBreakable = c; }
 }

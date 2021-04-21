@@ -44,7 +44,7 @@ public class MeshSplitter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "Bullet(Clone)")
+        if (other.gameObject.name == "Bullet(Clone)" && !this.transform.parent.gameObject.GetComponent<TetMesh>().GetCantBreak() )
         {
             // Riproduco il suono
             glassSound.Play();
@@ -66,6 +66,7 @@ public class MeshSplitter : MonoBehaviour
                 GameObject.Find("Player").GetComponent<PlayerMovement>().AddPoint(color);
             }
             this.transform.parent.gameObject.GetComponent<TetMesh>().SetBreak(true);
+            this.transform.parent.gameObject.GetComponent<TetMesh>().SetCantBreak(true);
 
             transform.parent.parent = null;
             transform.parent.GetComponent<TetMesh>().UpdateStatus();
