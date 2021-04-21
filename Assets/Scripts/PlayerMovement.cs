@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("PlayerController")]
     public Transform playerBody;
     public CharacterController controller;
-    public GameObject gameOver, hud;
+    public GameObject gameOver, hud, pause;
     public float speed = 12f;
 
     [Header("Hud")]
@@ -27,21 +27,28 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("GameOver")]
     public TextMeshProUGUI nuovoPunteggio;
-    public TextMeshProUGUI record;  
+    public TextMeshProUGUI record;
+
+    [Header("Pause")]
+    public TextMeshProUGUI nuovoPunteggioPausa;
+    public TextMeshProUGUI recordPausa;
 
     private float timeRemaining;
     private int punteggioCounter, combo;
     private int[] color = new int[3] { 4, 5, 5 };
     private int oldScore;
+    private static bool gameIsPaused;
 
 
     private void Start()
     {
+        gameIsPaused = false;
         oldScore = PlayerPrefs.GetInt("score", 0);
         punteggioCounter = 0;
         combo = 1;
         hud.SetActive(true);
         gameOver.SetActive(false);
+        pause.SetActive(false);
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;
         timeRemaining = 60;
@@ -63,6 +70,18 @@ public class PlayerMovement : MonoBehaviour
             PlayerPrefs.SetInt("score", punteggioCounter);
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (gameIsPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
+        }
+
         if (timeRemaining > 0)
         {
             timeRemaining -= Time.deltaTime;
@@ -70,13 +89,29 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            Cursor.lockState = CursorLockMode.Confined;
-            hud.SetActive(false);
-            gameOver.SetActive(true);
-            Time.timeScale = 0;
-            record.text = "Record: " + PlayerPrefs.GetInt("score", 0); ;
-            nuovoPunteggio.text = "Punteggio: " + punteggioCounter;
+            GameOver();
         }
+    }
+
+    public void Pause()
+    {
+        pause.SetActive(true);
+        hud.SetActive(false);
+        Cursor.lockState = CursorLockMode.Confined;
+        Time.timeScale = 0;
+        gameIsPaused = true;
+        
+        recordPausa.text = "Record: " + PlayerPrefs.GetInt("score", 0);
+        nuovoPunteggioPausa.text = "Punteggio: " + punteggioCounter;
+    }
+
+    public void Resume()
+    {
+        pause.SetActive(false);
+        hud.SetActive(true);
+        Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1;
+        gameIsPaused = false;
     }
 
     public void GameOver()
@@ -85,6 +120,8 @@ public class PlayerMovement : MonoBehaviour
         hud.SetActive(false);
         Cursor.lockState = CursorLockMode.Confined;
         Time.timeScale = 0;
+        record.text = "Record: " + PlayerPrefs.GetInt("score", 0);
+        nuovoPunteggio.text = "Punteggio: " + punteggioCounter;
     }
 
     public void StartScene()

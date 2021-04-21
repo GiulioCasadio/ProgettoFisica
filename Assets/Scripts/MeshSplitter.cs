@@ -25,7 +25,7 @@ public class MeshSplitter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "Bullet(Clone)" )
+        if (other.gameObject.name == "Bullet(Clone)")
         {
             // Aggiorno il punteggio
             if (transform.parent.parent != null)
@@ -56,7 +56,7 @@ public class MeshSplitter : MonoBehaviour
 
             SplitMesh();
         }
-        else
+        else if(other.gameObject.name != "GeneratorX")
         {
             transform.parent.parent = null;
         }
