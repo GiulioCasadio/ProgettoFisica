@@ -224,6 +224,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         punteggioCounter = punteggioCounter + 10*combo;
-        punteggio.text = "Punteggio: " + punteggioCounter;
+        punteggio.text = punteggioCounter.ToString();
     }
 }

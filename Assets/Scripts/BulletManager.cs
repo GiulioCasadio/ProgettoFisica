@@ -6,6 +6,7 @@ public class BulletManager : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject);
+        if(other.gameObject.name!="Urn")
+            Destroy(gameObject);
     }
 }
