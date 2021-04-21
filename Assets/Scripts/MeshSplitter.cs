@@ -12,6 +12,7 @@ public class MeshSplitter : MonoBehaviour
     protected List<Vector3> thisVertices =  new List<Vector3>();
     protected Dictionary<int, int> thisOldNewVertices = new Dictionary<int, int>();
 
+    private AudioSource glassSound;
     private GameObject planeCut;
 
     void Start()
@@ -21,6 +22,7 @@ public class MeshSplitter : MonoBehaviour
         Mesh mesh = GetComponent<MeshFilter>().mesh;
         mesh.RecalculateBounds();
         this.transform.gameObject.AddComponent<MeshCollider>().convex = true;
+        glassSound = GameObject.Find("Glass").GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -44,6 +46,9 @@ public class MeshSplitter : MonoBehaviour
     {
         if (other.gameObject.name == "Bullet(Clone)")
         {
+            // Riproduco il suono
+            glassSound.Play();
+
             // Aggiorno il punteggio
             if (transform.parent.parent != null)
             {

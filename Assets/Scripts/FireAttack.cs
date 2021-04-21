@@ -9,6 +9,8 @@ public class FireAttack : MonoBehaviour
     public Transform spawn;
     public int bulletSpeed;
     public TextMeshProUGUI mirino;
+    public AudioSource fireSound;
+
     private Animator anim;
     private bool aiming = false;
 
@@ -41,6 +43,7 @@ public class FireAttack : MonoBehaviour
             anim.SetTrigger("Fire");
             GameObject bullet = Instantiate(bulletPrefab, spawn.position, spawn.rotation) as GameObject;
             bullet.GetComponent<Rigidbody>().AddForce(spawn.transform.forward * bulletSpeed * Time.deltaTime, ForceMode.Impulse);
+            fireSound.Play();
         }
     }
 }

@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlatformManager : MonoBehaviour
 {
     public Material redMat, greenMat, blueMat;
-
     private void Start()
     {
         if(Random.Range(0, 3) == 0)
