@@ -4444,7 +4444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 1525928751376026492, guid: eb9dcbb06d0277342b9b85172322b73e, type: 3}
   spawn: {fileID: 1143274796}
-  bulletSpeed: 12000
+  bulletSpeed: 19000
   mirino: {fileID: 1126421186}
   fireSound: {fileID: 548934830}
 --- !u!1 &799407574

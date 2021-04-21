@@ -80,6 +80,7 @@ public class MeshSplitter : MonoBehaviour
         else if(other.gameObject.name != "GeneratorX")
         {
             transform.parent.parent = null;
+            transform.parent.gameObject.AddComponent<StillPosition>();
         }
     }
 
