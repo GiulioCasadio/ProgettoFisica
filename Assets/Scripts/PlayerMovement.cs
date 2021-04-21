@@ -187,7 +187,7 @@ public class PlayerMovement : MonoBehaviour
                 (comboCounter.color == Color.blue && color[0] == 2) ||
                 (comboCounter.color == Color.green && color[0] == 3))
             {
-                timeRemaining += 10;
+                timeRemaining += 5;
                 TextMeshProUGUI ex = Instantiate(extraTime) as TextMeshProUGUI;
                 ex.transform.SetParent(hud.transform);
                 ex.transform.position = new Vector2(timer.transform.position.x+110, timer.transform.position.y);
