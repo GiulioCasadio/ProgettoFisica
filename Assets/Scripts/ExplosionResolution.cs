@@ -15,6 +15,7 @@ public class ExplosionResolution : MonoBehaviour
         sl.maxValue = 64;
         sl.wholeNumbers = true;
         sl.value = PlayerPrefs.GetFloat("quality", 16);
+        qualitySet.text = sl.value.ToString();
     }
     public void UpdateQualityOnChange(float value)
     {
@@ -22,3 +23,6 @@ public class ExplosionResolution : MonoBehaviour
         qualitySet.text = value.ToString();
     }
 }
+
+//TODO correggere salvataggio impostazioni.
+// Menu di pausa a sinstra

@@ -23,6 +23,23 @@ public class MeshSplitter : MonoBehaviour
         this.transform.gameObject.AddComponent<MeshCollider>().convex = true;
     }
 
+    private void Update()
+    {
+        if (this.transform.parent.gameObject.GetComponent<TetMesh>().GetBreak())
+        {
+            transform.parent.GetComponent<TetMesh>().UpdateStatus();
+            if (transform.parent.GetComponent<TetMesh>().GetStatus() == 0)
+            {
+                this.transform.parent.gameObject.GetComponent<TetMesh>().SetBreak(false);
+            }
+            planeCut = GameObject.Find("PlaneCutter");
+            planeCut.transform.position = this.gameObject.transform.position;
+            planeCut.transform.Rotate(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
+
+            SplitMesh();
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "Bullet(Clone)")
@@ -43,14 +60,13 @@ public class MeshSplitter : MonoBehaviour
                 }
                 GameObject.Find("Player").GetComponent<PlayerMovement>().AddPoint(color);
             }
+            this.transform.parent.gameObject.GetComponent<TetMesh>().SetBreak(true);
 
             transform.parent.parent = null;
             transform.parent.GetComponent<TetMesh>().UpdateStatus();
             planeCut = GameObject.Find("PlaneCutter");
-            if (transform.parent.GetComponent<TetMesh>().GetStatus() > 15)
-                planeCut.transform.position = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
-            else
-                planeCut.transform.position = this.gameObject.transform.position;
+            planeCut.transform.position = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+
             planeCut.transform.rotation = other.transform.rotation;
             planeCut.transform.Rotate(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
 

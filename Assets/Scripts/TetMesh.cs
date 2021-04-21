@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -11,10 +10,12 @@ public class TetMesh : AbstractMesh
     private MeshFilter filter;
     private MeshRenderer meshRenderer;
 
-    private int isFell = 16;
-    
+    private int isFell;
+    private bool isBreaking = false;
+
     private void Init()
     {
+        isFell = (int)PlayerPrefs.GetFloat("quality", 16);
         // Creo il primo figlio con la mesh completa
         GameObject firstSon = new GameObject("firstSon");
         firstSon.AddComponent<Rigidbody>().mass = 10;
@@ -188,4 +189,8 @@ public class TetMesh : AbstractMesh
     public int GetStatus() { return isFell; }
 
     public void UpdateStatus() { isFell --; }
+
+    public bool GetBreak() { return isBreaking; }
+
+    public void SetBreak(bool c) { isBreaking = c; }
 }
