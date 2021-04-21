@@ -23,6 +23,3 @@ public class ExplosionResolution : MonoBehaviour
         qualitySet.text = value.ToString();
     }
 }
-
-//TODO correggere salvataggio impostazioni.
-// Menu di pausa a sinstra
